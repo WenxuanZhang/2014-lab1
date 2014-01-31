@@ -1,0 +1,257 @@
+# Author: Alexander Lex - alex@seas.harvard.edu
+# This is a quick intro to git, used in combination with GitHub. 
+# This is not a complete tutorial, but will use the most important git features. 
+
+# Create a folder for your project
+$ mkdir myProject
+$ cd myProject/
+
+# Init the git repository 
+$ git init 
+Initialized empty Git repository in ../myProject/.git/
+
+# Let's look at what git creates
+$ ls .git/ 
+branches  config  description  HEAD  hooks  info  objects  refs
+
+# The interesting stuff is in the config file
+$cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+
+
+# More interesting for a project with branches and remotes 
+$ cat .git/config 
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/CS171/HW1.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+
+# Now let's create a file
+$ echo 'Hello World' > demo.txt
+$ cat demo.txt 
+Hello World
+
+# Add it to version control
+git add demo.txt 
+
+# Let's look at what is going on with the repository
+$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#       new file:   demo.txt
+#
+
+# That means: git knows that it's supposed to track this file, but it's not yet versioned. 
+# Let's commit the file. Once a file is committed, it's state is recorded and you can go back to previous versions any time.
+$ git commit 
+[master (root-commit) 3be5e8c] Wrote to demo
+ 1 file changed, 1 insertion(+)
+ create mode 100644 demo.txt
+
+# Did it work?
+$ git status
+# On branch master
+nothing to commit, working directory clean
+
+# Now let's change something
+$ echo 'Are you still spinning?' >> demo.txt 
+$ cat demo.txt 
+Hello World!
+Are you still spinning?
+
+# Let's commit again!
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   demo.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+# That didn't work! You have to add all the files you want to commit. There is a shorthand, append '-a'
+$ git commit -a
+# Enter commit message, save
+[master a939cdf] spinning
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+ 
+# Better. Now, let's look at what happened up to now
+git log
+commit a939cdfeaf0a7ffb972e6616549e9053917e0673
+Author: Alexander Lex <alex@seas.harvard.edu>
+Date:   Thu Jan 30 20:35:37 2014 -0500
+
+    spinning
+
+commit 3be5e8c4b3691a70598d784483ef9cf35d5663ba
+Author: Alexander Lex <alex@seas.harvard.edu>
+Date:   Thu Jan 30 20:29:52 2014 -0500
+
+    Wrote to demo
+
+# Commits have a unique ID. This ID is a has of your complete history.  We will used this id to inform you which version of your submissions we consider on-time.
+
+# Now let's create a branch
+$ git branch draft
+
+# This created a branch with the name draft. Let's look at all the other branches
+$ git branch
+  draft
+* master
+
+# We have two branches, draft and master. The * tells us the active branch (the HEAD)
+
+# Let's switch the branch
+$ git checkout draft
+Switched to branch 'draft'
+
+# Let's see if there is something different
+$ cat demo.txt 
+Hello World!
+Are you still spinning?
+
+# No - it's the same! Now let's edit.
+$ echo "Spinning round and round" >> demo.txt 
+$ cat demo.txt 
+Hello World!
+Are you still spinning?
+Spinning round and round
+
+# And commit
+$ git commit -a 
+[draft 059daaa] Confirmed, spinning
+ 1 file changed, 1 insertion(+)
+ 
+# No let's switch back to master again
+$ git checkout master
+Switched to branch 'master'
+
+# The text isn't here.
+$ cat demo.txt 
+Hello World!
+Are you still spinning?
+
+# Writing something to the front and to the end
+$ cat demo.txt 
+I am here!
+Hello World!
+Are you still spinning?
+Indeed!
+
+$ git commit -a 
+[master 8437327] Front and back
+ 1 file changed, 2 insertions(+)
+ 
+# Now let's try to merge it
+$ git merge draft
+Auto-merging demo.txt
+CONFLICT (content): Merge conflict in demo.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+# The result
+$ cat demo.txt 
+I am here!
+Hello World!
+Are you still spinning?
+<<<<<<< HEAD
+Indeed!
+=======
+Spinning round and round
+>>>>>>> draft
+
+# The first line was merged without problems, The final line, where we have two alternative versions is a conflict. We have to manually resolve the conflict.
+
+# Once this is done, we can commit again.
+$ git commit -a 
+[master 4dad82f] Merge branch 'draft'
+
+# Everything back in order.
+$ git status 
+# On branch master
+nothing to commit, working directory clean
+
+# Now I'll create a new repository on github
+
+# If you don't have a git repository with code yet, you can simply clone that repository and start working on it:
+$ git clone https://github.com/alexsb/Demo.git
+# This creates a local copy of the (empty) github repository.
+
+# I'd like to push our changes to this repository.
+# This command tells git where the "origin" of this repository is.
+$ git remote add origin https://github.com/alexsb/Demo.git
+
+# We can see the changes already:
+$ cat .git/config 
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/alexsb/Demo.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+
+# Now we send our changes to github
+$ git push -u origin master
+Username for 'https://github.com': alexsb
+Password for 'https://alexsb@github.com': 
+Counting objects: 15, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (15/15), 1.22 KiB | 0 bytes/s, done.
+Total 15 (delta 2), reused 0 (delta 0)
+To https://github.com/alexsb/Demo.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+# Now our changes are on github.
+# Let's edit the file through the github web interface
+# To get the changes locally, we pull 
+
+$ git pull 
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From https://github.com/alexsb/Demo
+   4dad82f..4a83d51  master     -> origin/master
+Updating 4dad82f..4a83d51
+Fast-forward
+ demo.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+# Now these changes are back here:
+$ cat demo.txt 
+I am here!
+Hello World!
+Are you still spinning?
+Indeed!
+Spinning round and round.
+But don't you grow tired?
+
+
+# Forking on Github: Forking is essentially making use of the distributed nature of git, while having the benefits of a server.
+# Github Issues are a great way to keep track of open tasks and problems. Issues can be references and closed from commits. 
+
+ 
+
+
+
+
