@@ -1,0 +1,17 @@
+#vizbody{
+background-color: #FEFEFE;
+font-family: sans-serif;
+padding-left: 40px;
+padding-top: 40px;
+}
+
+.btn{
+background: #0AF;
+border: 1px solid #FFF;
+color: #FFF;
+padding:15px;
+}
+
+#datatable{
+margin-top:40px;
+}

@@ -1,0 +1,87 @@
+<!-- 
+Lab 1, CS171; 1/30/2014
+Intro to HTML, CSS, & JavaScript 
+Please refer to lab slides for more information.
+-->
+
+
+<!-- The <html> tag creates an HTML document, where we can put more HTML and JavaScript -->
+<html>
+    <head>
+        <title>My First Visualization!</title>
+        
+        <!-- To comment in HTML, precede your comment with '<!-- and end with -->
+         
+        <!-- The following line links to styles.css in the same directory as this file -->
+        <link href="styles.css" rel="stylesheet">
+        
+        <!--The following block of code includes JavaScript inside the HTML document -->
+        <!-- Note that the type attribute is not always necessary but included for clarity -->
+        
+        <script type="text/javascript">
+            <!-- This JavaScript statement alerts the user as the page renders this JavaScript statement -->
+            alert("The page had loaded!");
+            
+            <!-- This JavaScript statement creates a new variable named consolemessage with the value "Console message - the page has loaded."; -->
+            var consolemessage = "Console message - the page has loaded.";
+            
+            <!-- This JavaScript statement places a console message in the Chrome's JavaScript console, which is useful for debugging purposes.
+            console.log(consolemessage);
+            
+            <!--The following code defines a function called clickFunction which contains statements to alert the user and add a log message -->
+            <!--Note that this code is not run when the page renders the script; it will be run when the function is called -->
+            
+            function clickFunction() {
+                alert("Button clicked!");
+                console.log("The button has been clicked");
+            }
+        </script>
+        
+        <!-- The following script tags include the d3 and jQuery Javascript libraries -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+        <!-- The following script tags include the bootstrap Javascript library and bootstrap CSS library -->
+        <!-- Note that you should not include bootstrap for your assignments/homework for the class -->
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>                                                                                                  
+    </head>
+    
+    <!-- The body element includes the main content of the page -->  
+    <body id="vizbody">
+        <!-- The <h1> tag creates a header element.  The h1, h2, h3, h4, h5, and h6 tags provide structure for the HTML document. -->
+        <h1>Visualization of Interesting Data</h1>
+        
+        <!-- The <p> tag creates paragraph text for the document. --> 
+        <p>This is a description of an interactive visualization of data.</p>
+        
+        <!-- The <button> tag creates a button for the document. -->
+        <button class="btn" onclick="clickFunction()">Run visualization</button>
+        
+        <!-- The <table> tag creates a table for the document.  thead = table header; tbody = table body; tr = table row; td = table cell. -->
+        <table id = "datatable">
+            <thead>
+                <tr>
+                    <th>Header 1</th>
+                    <th>Header 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                </tr>
+                <tr>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                 </tr>
+             </tbody>
+         </table>
+         
+     <!-- The following block creates an SVG element with a rectangle. -->
+     <svg> 
+        <rect id="rect1" width="300" height="100" style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)" />
+     </svg> 
+     
+    </body>
+</html>
