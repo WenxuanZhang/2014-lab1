@@ -6,7 +6,7 @@ In this lab we will cover the fundamentals of what you need to get started wth w
   - CSS provides the presentational layer of a page
   - Javascript provides interaction with the page.
 
-The presentation slides used in the labs are attached.  Topics include basics of HTMl, Javascript, CSS, and quick introduction to SVG and libraries([jQuery],[d3.js],[Twitter Bootstrap]). 
+The presentation slides used in the labs are attached.  Topics include basics of HTMl, Javascript, CSS, and quick introduction to SVG and libraries ([jQuery], [d3.js], and[Twitter Bootstrap]). 
 
 Version
 ----
@@ -37,5 +37,6 @@ MIT
 [d3.js]:http://d3js.org/
 [Twitter Bootstrap]:http://twitter.github.com/bootstrap/
 [jQuery]:http://jquery.com
+[Google Chrome]:https://www.google.com/chrome
 
     
